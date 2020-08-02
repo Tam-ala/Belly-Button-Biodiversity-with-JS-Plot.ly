@@ -3,83 +3,63 @@ d3.json("../Data/samples.json").then(function (data) {
     console.log(data)
 });
 
-// initialize plots, metadata, and dropdown when webpage opens
+// define initialize function to diplay plots and metadata when webpage opens
 function init() {
-    d3.json("../Data/samples.json").then(function (data) {
-        console.log(data)
-
-        // define variables
-        var metadata = data.metadata
-        // console.log(metadata)
-        var name = data.names
-        // console.log(name)
-        var dropdown = d3.select("#selDataset");
-        // console.log(dropdownMenu)
-        var info = d3.select("#sample-metadata")
-        // console.log(info)
-
-        name.forEach(function(info) {
-            dropdown.append("option").text(info).property("value");
-        }); 
-    });
-
-    optionChanged();
-}
-init();
-
-// make function to change plots when dropdown changes
-function optionChanged() {
-    d3.selectAll("#selDataset").on("change", optionChanged);
-    buildDemoInfo();
-    buildPlots();
-}
-
-// make function for demographic panel
-function buildDemoInfo() {
-    d3.json("../Data/samples.json").then(function (data) {
-        console.log(data)
-
-        // define variables
-        var metadata = data.metadata
-        var info = d3.select("#sample-metadata")
-        // console.log(info)
-
-        info.html("")
-
-        // filter test subjects by their id
-        var selectId = metadata.filter(info => info.id === info.id)
-        console.log(selectId)
-
-        // pick selected as the first index
-        Object.entries(selectId[1]).forEach(function ([key, value]) {
-            var row = info.append("p");
-            row.text(`${key} : ${value}`)
-            console.log(key, value)
-        })
-    });
-};
-
-// make function for plots
-function buildPlots() {
     d3.json("../Data/samples.json").then((data) => {
+        console.log(data)
 
-        // define variables for the selected dropdown
-        var sampValues = data.samples[1].sample_values;
-        var otuIds = data.samples[1].otu_ids;
-        var otuLables = data.samples[1].otu_lables;
+        // save select element to dropdown variable
+        var dropdown = d3.select("#selDataset");
+
+        // create for-loop to select test subject by index and then by id
+        data.samples.forEach((test, index) => {
+            dropdown.append("option").text(test.id).property("value",index);
+        });
+
+        // call function to display 1st test subject
+        optionChanged(0);
+
+    });
+
+}
+
+// define optionChanged function, include value argument to match html file
+function optionChanged(value) {
+    d3.json("../Data/samples.json").then(function (data) {
+        console.log(data)
+
+        // define variables for metadata & plots
+        var metadata = data.metadata;
+        var sampValues = data.samples[value].sample_values;
+        var otuIds = data.samples[value].otu_ids;
+        var otuLables = data.samples[value].otu_lables;
+        var sampleinfo = d3.select("#sample-metadata");
+
+        // -------------------------------------------------------------------------------
+
+        // FOR METADATA
+        // clear previous test subject 
+        sampleinfo.html("");
+
+        // display new test subject
+        selectId = Object.entries(metadata[value]).forEach(function ([key, value]) {
+            var row = sampleinfo.append("p");
+            row.text(`${key} : ${value}`);
+            console.log(key, value);
+        });
 
         // -------------------------------------------------------------------------------
 
         // FOR BUBBLE PLOT
-        // 1. Create a bubble chart that displays each sample:
-        // 2. Use otu_ids for the x values.
-        // 3. Use sample_values for the y values.
-        // 4. Use sample_values for the marker size.
-        // 5. Use otu_ids for the marker colors.
-        // 6. Use otu_labels for the text values.
+        //Create a bubble chart that displays each sample:
+        // 1. Use otu_ids for the x values.
+        // 2. Use sample_values for the y values.
+        // 3. Use sample_values for the marker size.
+        // 4. Use otu_ids for the marker colors.
+        // 5. Use otu_labels for the text values.
 
         // define trace
-        var trace = {
+        var bubbletrace = {
             x: otuIds,
             y: sampValues,
             text: otuLables,
@@ -91,9 +71,9 @@ function buildPlots() {
         };
 
         //  define data & layout for plots
-        var bubbledata = [trace];
+        var bubbledata = [bubbletrace];
         var bubblelayout = {
-            title: 'Total OTUs by Test Subject',
+            title: 'Total OTUs',
             showlegend: false,
             height: 1000,
             width: 1500
@@ -102,11 +82,10 @@ function buildPlots() {
         // -------------------------------------------------------------------------------
 
         // FOR BAR PLOT
-        // 1. Create a horizontal bar chart with a dropdown menu to display the top 10 OTUs 
-        // 2. found in that individual:
-        // 3. sample_values as the values for the bar chart.
-        // 4. Use otu_ids as the labels for the bar chart.
-        // 5. Use otu_labels as the hovertext for the chart.
+        // Create a horizontal bar chart with a dropdown menu to display the top 10 OTUs found in that individual:
+        // 1. sample_values as the values for the bar chart.
+        // 2. Use otu_ids as the labels for the bar chart.
+        // 3. Use otu_labels as the hovertext for the chart.
 
         // slice & reverse data since it's already sorted by looking at samples.json's sample_values
         var sliceValues = sampValues.slice(0, 11).reverse();
@@ -120,7 +99,6 @@ function buildPlots() {
         var trace = {
             x: sliceValues,
             y: otuIDlabel,
-            // text: otuLables,
             name: "Test Subjects",
             orientation: "h",
             type: "bar"
@@ -129,7 +107,7 @@ function buildPlots() {
         // define data array and layout
         var bardata = [trace];
         var barlayout = {
-            title: "Top 10 OTUs by Test Subject",
+            title: "Top 10 OTUs",
             height: 500,
             width: 500
         };
@@ -137,6 +115,9 @@ function buildPlots() {
         // Render the plot to the div tag with id "bubble" 
         Plotly.newPlot("bubble", bubbledata, bubblelayout);
         Plotly.newPlot("bar", bardata, barlayout);
+
     });
 
-}
+};
+
+init();
