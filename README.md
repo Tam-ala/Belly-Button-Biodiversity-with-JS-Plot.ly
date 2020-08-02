@@ -14,9 +14,9 @@ Hulcr, J. et al.(2012) _A Jungle in There: Bacteria in Belly Buttons are Highly 
 
 ## Programs and Tools Used
 
-Javascript libraries D3 & Plotly
+Javascript libraries D3 & Plotly: [Code](Code/static/js/app.js)
 
-HTML & CSS
+HTML & CSS: [Index](Code/index.html)
 
 
 ## Deployment
