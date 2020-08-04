@@ -14,9 +14,9 @@ Hulcr, J. et al.(2012) _A Jungle in There: Bacteria in Belly Buttons are Highly 
 
 ## Programs and Tools Used
 
-Javascript libraries D3 & Plotly: [JS Code](Code/static/js/app.js)
+Javascript libraries D3 & Plotly: [JS Code](Code/js/app.js)
 
-HTML & CSS: [Index Code](Code/index.html)
+HTML & CSS: [Index Code](index.html)
 
 
 ## Deployment
@@ -37,8 +37,6 @@ This assignment was achieved by doing the following:
 
       * Use `otu_labels` as the hovertext for the chart.
 
-      ![bar Chart](Images/hw01.png)
-
   3. Create a bubble chart that displays each sample.
 
       * Use `otu_ids` for the x values.
@@ -51,14 +49,9 @@ This assignment was achieved by doing the following:
 
       * Use `otu_labels` for the text values.
 
-      ![Bubble Chart](Images/bubble_chart.png)
-
-
   4. Display the sample metadata, i.e., an individual's demographic information.
 
   5. Display each key-value pair from the metadata JSON object somewhere on the page.
-
-    ![hw](Images/hw03.png)
 
   6. Update all of the plots any time that a new sample is selected.
 
