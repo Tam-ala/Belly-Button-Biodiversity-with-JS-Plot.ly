@@ -1,11 +1,11 @@
 // verify that data shows up
-d3.json("Data/samples.json").then(function (data) {
+d3.json("data/samples.json").then(function (data) {
     console.log(data)
 });
 
 // define initialize function to diplay plots and metadata when webpage opens
 function init() {
-    d3.json("Data/samples.json").then((data) => {
+    d3.json("data/samples.json").then((data) => {
         console.log(data)
 
         // save select element to dropdown variable
@@ -25,7 +25,7 @@ function init() {
 
 // define optionChanged function, include value argument to match html file
 function optionChanged(value) {
-    d3.json("Data/samples.json").then(function (data) {
+    d3.json("data/samples.json").then(function (data) {
         console.log(data)
 
         // define variables for metadata & plots
