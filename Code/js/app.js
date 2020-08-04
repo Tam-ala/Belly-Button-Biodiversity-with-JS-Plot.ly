@@ -1,11 +1,11 @@
 // verify that data shows up
-d3.json("../Data/samples.json").then(function (data) {
+d3.json("Data/samples.json").then(function (data) {
     console.log(data)
 });
 
 // define initialize function to diplay plots and metadata when webpage opens
 function init() {
-    d3.json("../Data/samples.json").then((data) => {
+    d3.json("Data/samples.json").then((data) => {
         console.log(data)
 
         // save select element to dropdown variable
@@ -25,7 +25,7 @@ function init() {
 
 // define optionChanged function, include value argument to match html file
 function optionChanged(value) {
-    d3.json("../Data/samples.json").then(function (data) {
+    d3.json("Data/samples.json").then(function (data) {
         console.log(data)
 
         // define variables for metadata & plots
@@ -73,10 +73,10 @@ function optionChanged(value) {
         //  define data & layout for plots
         var bubbledata = [bubbletrace];
         var bubblelayout = {
-            title: 'Total OTUs',
+            title: "Test Subject's Total OTUs",
             showlegend: false,
-            height: 1000,
-            width: 1500
+            height: 800,
+            width: 950
         };
 
         // -------------------------------------------------------------------------------
@@ -99,7 +99,7 @@ function optionChanged(value) {
         var trace = {
             x: sliceValues,
             y: otuIDlabel,
-            name: "Test Subjects",
+            // name: Test Subjects,
             orientation: "h",
             type: "bar"
         };
@@ -107,7 +107,7 @@ function optionChanged(value) {
         // define data array and layout
         var bardata = [trace];
         var barlayout = {
-            title: "Top 10 OTUs",
+            title: "Test Subject's Top 10 OTUs",
             height: 500,
             width: 500
         };
