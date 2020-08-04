@@ -76,7 +76,7 @@ function optionChanged(value) {
             title: "Test Subject's Total OTUs",
             showlegend: false,
             height: 800,
-            width: 950
+            width: 1000
         };
 
         // -------------------------------------------------------------------------------
